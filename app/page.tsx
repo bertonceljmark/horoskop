@@ -15,7 +15,7 @@ export default function Home() {
 
   const mostVisitedSign = useMemo(() => {
     return (
-      localStorageSigns.reduce(
+      localStorageSigns?.reduce(
         (
           maxObject: { numberOfTimesUsed: number; key: string },
           currentObject: { numberOfTimesUsed: number; key: string }
