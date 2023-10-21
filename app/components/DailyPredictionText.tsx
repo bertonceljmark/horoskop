@@ -11,8 +11,12 @@ interface IProps {
 const DailyPredictionText = ({ sign }: IProps) => {
   const { message, loading } = useGPT({ sign });
 
-  if (loading || !message) {
+  if (loading) {
     return <CircularProgress size="lg" />;
+  }
+
+  if (!message) {
+    return <span>Alo care zgorej zber sign</span>;
   }
 
   return (

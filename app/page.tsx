@@ -2,7 +2,6 @@
 import { useEffect, useMemo } from "react";
 import SignSelect from "./components/SignSelect";
 import { useState } from "react";
-import starSignList from "./utils/starSignHelper";
 import DailyPredictionText from "./components/DailyPredictionText";
 import { StarValueType } from "./interfaces/globalInterfaces";
 import {
