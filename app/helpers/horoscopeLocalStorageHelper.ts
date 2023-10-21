@@ -6,12 +6,15 @@ export const addToLocalStorage = (
   key: StarValueType,
   value: { date: string; message: string }
 ) => {
-  const parsedValue = JSON.stringify(value);
+  if (typeof window === "undefined") return;
 
+  const parsedValue = JSON.stringify(value);
   window.localStorage.setItem(key, parsedValue);
 };
 
 export const getFromLocalStorage = (key: StarValueType | null) => {
+  if (typeof window === "undefined") return;
+
   if (key) {
     const parsedItem = JSON.parse(window.localStorage.getItem(key) || "");
 
@@ -22,6 +25,8 @@ export const getFromLocalStorage = (key: StarValueType | null) => {
 export const clearLocalStorage = () => window.localStorage.clear();
 
 export const wasSavedToday = (key: StarValueType | null) => {
+  if (typeof window === "undefined") return;
+
   if (key) {
     const item = window?.localStorage?.getItem(key);
 
@@ -34,6 +39,8 @@ export const wasSavedToday = (key: StarValueType | null) => {
 };
 
 export const setLocalStorageSigns = (newSign: StarValueType) => {
+  if (typeof window === "undefined") return;
+
   const signs = JSON.parse(window.localStorage.getItem("signs") || "[]");
 
   if (!signs.includes(newSign)) {
@@ -44,12 +51,16 @@ export const setLocalStorageSigns = (newSign: StarValueType) => {
 };
 
 export const getLocalStorageSigns = () => {
+  if (typeof window === "undefined") return;
+
   const signs = JSON.parse(window.localStorage.getItem("signs") || "[]");
 
   return signs;
 };
 
 export const bumpNumberOfTimesUsed = (key: StarValueType) => {
+  if (typeof window === "undefined") return;
+
   const existingItems = JSON.parse(
     window?.localStorage?.getItem("signs") || "[]"
   );
