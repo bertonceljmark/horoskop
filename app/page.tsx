@@ -27,7 +27,7 @@ export default function Home() {
         localStorageSigns[0]
       ) || null
     );
-  }, []);
+  }, [localStorageSigns]);
 
   const [sign, setSign] = useState<StarValueType | null>(
     mostVisitedSign?.key || null
