@@ -1,11 +1,11 @@
 import { useEffect, useState, useMemo } from "react";
-import generateAnswer from "../api/generateAnswer";
 import { StarValueType } from "../interfaces/globalInterfaces";
 import {
   addToLocalStorage,
   getFromLocalStorage,
   wasSavedToday,
 } from "../helpers/horoscopeLocalStorageHelper";
+import { chatgptService } from "../services/chatgpt";
 
 interface IProps {
   sign: StarValueType | null;
@@ -34,7 +34,7 @@ const useGPT = ({ sign }: IProps) => {
       } else {
         const fetchData = async () => {
           setLoading(true);
-          return await generateAnswer(sign);
+          return await chatgptService.generateAnswer(sign)
         };
 
         fetchData().then((msg) => {

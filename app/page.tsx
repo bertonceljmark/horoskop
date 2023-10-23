@@ -8,6 +8,7 @@ import {
   bumpNumberOfTimesUsed,
   getLocalStorageSigns,
 } from "./helpers/horoscopeLocalStorageHelper";
+import { chatgptService } from "./services/chatgpt";
 
 export default function Home() {
   const localStorageSigns = getLocalStorageSigns();
@@ -48,6 +49,7 @@ export default function Home() {
         <div className="my-5 w-full flex items-center justify-center">
           <DailyPredictionText sign={sign} key={sign} />
         </div>
+        <button onClick={()=>chatgptService.generateAnswer(sign as StarValueType)}>TEST</button>
       </div>
     </main>
   );
