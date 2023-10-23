@@ -8,13 +8,20 @@ import {
   bumpNumberOfTimesUsed,
   getLocalStorageSigns,
 } from "./helpers/horoscopeLocalStorageHelper";
-import { chatgptService } from "./services/chatgpt";
 
 export default function Home() {
-  const localStorageSigns = getLocalStorageSigns();
+  const [mostVisitedSignKey, setMostVisitedSignKey] = useState<string | null>(
+    null
+  );
 
-  const mostVisitedSign = useMemo(() => {
-    return (
+  const [sign, setSign] = useState<StarValueType | null>(
+    mostVisitedSignKey as StarValueType
+  );
+
+  useEffect(() => {
+    const localStorageSigns = getLocalStorageSigns();
+
+    const signKeyWithMostVisits =
       localStorageSigns?.reduce(
         (
           maxObject: { numberOfTimesUsed: number; key: string },
@@ -26,13 +33,10 @@ export default function Home() {
           return maxObject;
         },
         localStorageSigns[0]
-      ) || null
-    );
-  }, [localStorageSigns]);
+      ) || null;
 
-  const [sign, setSign] = useState<StarValueType | null>(
-    mostVisitedSign?.key || null
-  );
+    setMostVisitedSignKey(signKeyWithMostVisits?.key || null);
+  });
 
   useEffect(() => {
     if (sign) {
@@ -49,7 +53,6 @@ export default function Home() {
         <div className="my-5 w-full flex items-center justify-center">
           <DailyPredictionText sign={sign} key={sign} />
         </div>
-        <button onClick={()=>chatgptService.generateAnswer(sign as StarValueType)}>TEST</button>
       </div>
     </main>
   );
