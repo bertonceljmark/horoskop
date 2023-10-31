@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model StarSign {
+  signId           String             @id @unique
+  title            String
+  entries          Prediction[]
+}
+
+model Prediction {
+  id        String   @id @default(cuid())
+  content   String
+  signId    String
+  createdAt DateTime @default(now()) @map("created_at")
+  sign      StarSign @relation(fields: [signId], references: [signId])
+
+  @@map("Predictions")
+}
+
+model WeeklyPrediction {
+  id        String   @id @default(cuid())
+  signId    String
+  content   String
+  health    Int
+  money     Int
+  love      Int
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("WeeklyPredictions")
+}
