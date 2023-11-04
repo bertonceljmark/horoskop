@@ -46,7 +46,6 @@
     {
       "path": "generateWeekly?sign=leo",
       "schedule": "11 4 * * Sun"
-    },
-
+    }
   ]
 }
