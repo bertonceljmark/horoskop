@@ -5,10 +5,10 @@ interface IProps {
   health: number;
   money: number;
   love: number;
-  text: string;
+  content: string;
 }
 
-const WeeklyHoroscopeCard = ({sign, health, money, love, text}: IProps) => {
+const WeeklyHoroscopeCard = ({sign, health, money, love, content}: IProps) => {
   return (
     <div className="my-5 w-full max-w-2x2">
       <h3 className="text-center">{sign}</h3>
@@ -17,7 +17,7 @@ const WeeklyHoroscopeCard = ({sign, health, money, love, text}: IProps) => {
         <h4 className="mx-5">Money: {money}</h4>
         <h4 className="mx-5">Love: {love}</h4>
       </div>
-      <p>{text}</p>
+      <p>{content}</p>
     </div>
   )
 }

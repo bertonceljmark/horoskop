@@ -11,7 +11,7 @@ export async function generateWeekly(sign: StarValueType): Promise<IWeaklyPredic
   
   Output should look like this in JSON format: {
     sign: "virgo"|"libra"|"scorpio"|"sagittarius"|"capricorn"|"aquarius"|"pisces"|"aries"|"taurus"|"gemini"|"cancer"|"leo",
-    text: string,
+    content: string,
     health: number from 0 to 10,
     money: number from 0 to 10,
     love: number from 0 to 10,

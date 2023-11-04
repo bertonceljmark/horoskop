@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     const databaseData = await responses.map(prediction => {
       return {
         signId: prediction.sign,
-        content: prediction.text,
+        content: prediction.content,
         health: prediction.health,
         money: prediction.money,
         love: prediction.love,
@@ -27,7 +27,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(responses);
 
   } catch (error) {
-    console.log(error)
     return NextResponse.json({ error }, { status: 400 });
   }
 }

@@ -1,14 +1,43 @@
 "use client";
-
-import WeeklyHoroscopeCard from "../components/WeeklyHoroscopeCard";
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useEffect, useState } from "react";
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/effect-cards';
-
 import { Navigation, Pagination } from 'swiper/modules';
+
+import WeeklyHoroscopeCard from "../components/WeeklyHoroscopeCard";
+import { IWeaklyPrediction } from "../interfaces/globalInterfaces";
+import { weekliesService } from '../services/weeklies';
+
+const sliderBreakpoints = {
+  640: {
+    slidesPerView: 1,
+    spaceBetween: 20,
+  },
+  768: {
+    slidesPerView: 2,
+    spaceBetween: 40,
+  },
+  1024: {
+    slidesPerView: 3,
+    spaceBetween: 50,
+  },
+}
+
 const WeeklyHoroscope = () => {
+  const [weeklies, setWeeklies] = useState<IWeaklyPrediction[]>([])
+
+  const fetchWeeklies = async () => {
+    const weeklies = await weekliesService.getWeeklies()
+    setWeeklies(weeklies)
+  }
+
+  useEffect(() => {
+    fetchWeeklies()
+  }, [])
+
   return (
     <main className="flex min-h-screen flex-col items-center md:p-24 p-3">
       <div className="w-full max-w-4xl">
@@ -19,63 +48,24 @@ const WeeklyHoroscope = () => {
           slidesPerView={1}
           spaceBetween={10}
           navigation={true}
-          pagination={{
-            clickable: true
-          }}
-          breakpoints={{
-            640: {
-              slidesPerView: 1,
-              spaceBetween: 20,
-            },
-            768: {
-              slidesPerView: 2,
-              spaceBetween: 40,
-            },
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 50,
-            },
-          }}
+          pagination={{clickable: true}}
+          breakpoints={sliderBreakpoints}
           modules={[Navigation, Pagination]}
           className="mySwiper"
         >
-          <SwiperSlide>
-            <WeeklyHoroscopeCard 
-              sign="Aries"
-              health={1}
-              money={2}
-              love={3}
-              text={"Aries, Mars’ continued transit through Scorpio is deepening your intuitive faculties, and it’ll be quite evident in this post-eclipse week, particularly when it comes to money matters. If you’ve been wanting to look into conscious-investing strategies, you have the green light to begin your research, as Jupiter and Uranus’ presence in your money sector orients you toward fulfilling, reciprocal, and win-win situations."}
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <WeeklyHoroscopeCard 
-              sign="Aries"
-              health={4}
-              money={5}
-              love={6}
-              text={"Aries, Mars’ continued transit through Scorpio is deepening your intuitive faculties, and it’ll be quite evident in this post-eclipse week, particularly when it comes to money matters. If you’ve been wanting to look into conscious-investing strategies, you have the green light to begin your research, as Jupiter and Uranus’ presence in your money sector orients you toward fulfilling, reciprocal, and win-win situations."}
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <WeeklyHoroscopeCard 
-              sign="Aries"
-              health={7}
-              money={8}
-              love={9}
-              text={"Aries, Mars’ continued transit through Scorpio is deepening your intuitive faculties, and it’ll be quite evident in this post-eclipse week, particularly when it comes to money matters. If you’ve been wanting to look into conscious-investing strategies, you have the green light to begin your research, as Jupiter and Uranus’ presence in your money sector orients you toward fulfilling, reciprocal, and win-win situations."}
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <WeeklyHoroscopeCard 
-              sign="Aries"
-              health={1}
-              money={2}
-              love={3}
-              text={"Aries, Mars’ continued transit through Scorpio is deepening your intuitive faculties, and it’ll be quite evident in this post-eclipse week, particularly when it comes to money matters. If you’ve been wanting to look into conscious-investing strategies, you have the green light to begin your research, as Jupiter and Uranus’ presence in your money sector orients you toward fulfilling, reciprocal, and win-win situations."}
-            />
-          </SwiperSlide>
-  
+          {weeklies.map((weekly,i) => {
+            return (
+              <SwiperSlide key={`${weekly.sign}-${i}`}>
+                <WeeklyHoroscopeCard
+                  sign={weekly.sign}
+                  health={weekly.health}
+                  money={weekly.money}
+                  love={weekly.love}
+                  content={weekly.content}
+                />
+              </SwiperSlide>
+            )
+          })}
         </Swiper>
       </div>
     </main>

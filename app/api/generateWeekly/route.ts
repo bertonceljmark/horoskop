@@ -10,12 +10,12 @@ export async function GET(request: NextRequest) {
     if (!Object.keys(StarValues).includes(signId.toLocaleUpperCase())) throw new Error("Sign not valid")
 
     const response = await generateWeekly(signId)
-    if (!response) throw new Error("No text generated")
+    if (!response) throw new Error("No content generated")
 
     await prisma.weeklyPrediction.create({
       data: {
         signId,
-        content: response.text,
+        content: response.content,
         health: response.health,
         money: response.money,
         love: response.love,
