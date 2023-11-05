@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/generateWeeklies",
+      "schedule": "0 4 * * 0"
+    }
+  ]
+}
