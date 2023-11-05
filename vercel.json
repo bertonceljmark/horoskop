@@ -1,51 +1,8 @@
 {
   "crons": [
     {
-      "path": "/api/generateWeekly?sign=virgo",
+      "path": "/api/generateWeeklies",
       "schedule": "0 4 * * 0"
-    },
-    {
-      "path": "/api/generateWeekly?sign=libra",
-      "schedule": "1 4 * * 0"
-    },
-    {
-      "path": "/api/generateWeekly?sign=scorpio",
-      "schedule": "2 4 * * 0"
-    },
-    {
-      "path": "/api/generateWeekly?sign=sagittarius",
-      "schedule": "3 4 * * 0"
-    },    {
-      "path": "/api/generateWeekly?sign=capricorn",
-      "schedule": "4 4 * * 0"
-    },
-    {
-      "path": "/api/generateWeekly?sign=aquarius",
-      "schedule": "5 4 * * 0"
-    },
-    {
-      "path": "/api/generateWeekly?sign=pisces",
-      "schedule": "6 4 * * 0"
-    },
-    {
-      "path": "/api/generateWeekly?sign=aries",
-      "schedule": "7 4 * * 0"
-    },
-    {
-      "path": "/api/generateWeekly?sign=taurus",
-      "schedule": "8 4 * * 0"
-    },
-    {
-      "path": "/api/generateWeekly?sign=gemini",
-      "schedule": "9 4 * * 0"
-    },
-    {
-      "path": "/api/generateWeekly?sign=cancer",
-      "schedule": "10 4 * * 0"
-    },
-    {
-      "path": "/api/generateWeekly?sign=leo",
-      "schedule": "11 4 * * 0"
     }
   ]
 }

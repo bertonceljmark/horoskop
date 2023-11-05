@@ -1,32 +1,49 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { StarValues } from "@/app/interfaces/globalInterfaces";
+import { StarValueType, StarValues } from "@/app/interfaces/globalInterfaces";
 import { generateWeekly } from "../gptService";
 
-// It will fail you can generate only around 3 because GPT API,
-// Should be created for loop to await each request and then save it to DB
+// Should be better with Promise.all() in parallel but ChatGPT API fails
 export async function GET(request: NextRequest) {
   try {
-
-    const requests = Object.values(StarValues).map(sign => {
-      return generateWeekly(sign)
-    })
-
-    const responses = await Promise.all(requests)
-    const databaseData = await responses.map(prediction => {
-      return {
-        signId: prediction.sign,
-        content: prediction.content,
-        health: prediction.health,
-        money: prediction.money,
-        love: prediction.love,
+    const weeklies = []
+    const failed = []
+    for (const sign of Object.values(StarValues)) {
+      try {
+        const generatedWeekly = await generateWeekly(sign)
+  
+        weeklies.push({
+          signId: generatedWeekly.sign,
+          content: generatedWeekly.content,
+          health: generatedWeekly.health,
+          money: generatedWeekly.money,
+          love: generatedWeekly.love,
+        })
+      } catch (error) {
+        console.error(`Generating weekly failed for: ${sign}`, error)
+        failed.push(sign)
       }
-    })
+    }
 
-    await prisma.weeklyPrediction.createMany({ data: databaseData })
-    return NextResponse.json(responses);
+    for (const sign of failed) {
+      try {
+        const generatedWeekly = await generateWeekly(sign as StarValueType)
+        weeklies.push({
+          signId: generatedWeekly.sign,
+          content: generatedWeekly.content,
+          health: generatedWeekly.health,
+          money: generatedWeekly.money,
+          love: generatedWeekly.love,
+        })
+      } catch (error) {
+        console.error(`Generating weekly failed 2nd time for: ${sign}`, error)
+      }
+    }
 
-  } catch (error) {
-    return NextResponse.json({ error }, { status: 400 });
+    await prisma.weeklyPrediction.createMany({ data: weeklies })
+    return NextResponse.json(weeklies);
+
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 400 })
   }
 }
