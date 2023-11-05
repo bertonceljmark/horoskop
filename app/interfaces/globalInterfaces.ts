@@ -28,7 +28,7 @@ export const StarValues = Object.freeze({
 })
 
 export interface IWeaklyPrediction {
-  sign: string
+  signId: string
   content: string,
   health: number,
   money: number,

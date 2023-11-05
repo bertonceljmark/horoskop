@@ -10,7 +10,7 @@ export async function generateWeekly(sign: StarValueType): Promise<IWeaklyPredic
   Prediction should be focused on today and not longer time period. Do not use emojis. Do not use word today.
   
   Output should look like this in JSON format: {
-    sign: "virgo"|"libra"|"scorpio"|"sagittarius"|"capricorn"|"aquarius"|"pisces"|"aries"|"taurus"|"gemini"|"cancer"|"leo",
+    signId: "virgo"|"libra"|"scorpio"|"sagittarius"|"capricorn"|"aquarius"|"pisces"|"aries"|"taurus"|"gemini"|"cancer"|"leo",
     content: string,
     health: number from 0 to 10,
     money: number from 0 to 10,
