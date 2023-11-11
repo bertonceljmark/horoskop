@@ -11,3 +11,26 @@ export type StarValueType =
   | "gemini"
   | "cancer"
   | "leo";
+
+export const StarValues = Object.freeze({
+  VIRGO: "virgo",
+  LIBRA: "libra",
+  SCORPIO: "scorpio",
+  SAGITTARIUS: "sagittarius",
+  CAPRICORN: "capricorn",
+  AQUARIUS: "aquarius",
+  PISCE: "pisces",
+  ARIES: "aries",
+  TAURUS: "taurus",
+  GEMINI: "gemini",
+  CANCER: "cancer",
+  LEO: "leo",
+})
+
+export interface IWeaklyPrediction {
+  signId: string
+  content: string,
+  health: number,
+  money: number,
+  love: number,
+}

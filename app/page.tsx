@@ -1,22 +1,28 @@
 "use client";
-import { useState } from "react";
-import DailyHoroscope from "./pages/DailyHoroscope";
-import ParticlesBackground from "./components/ParticlesBackground";
-import { CircularProgress } from "@nextui-org/react";
+import Link from "next/link";
+import useGetInitSign from "./hooks/useGetInitSign";
 
-export default function Home() {
-  const [pageLoading, setPageLoading] = useState(true);
+export default function Home(test: any) {
+  const sign = useGetInitSign();
 
   return (
     <>
-      <ParticlesBackground setPageLoading={setPageLoading} />
-      {pageLoading ? (
-        <div className="w-screen h-screen flex items-center justify-center bg-black z-[9999999]">
-          <CircularProgress size="lg" />
+      <section className=" text-white py-20">
+        <div className="container mx-auto text-center">
+          <h1 className="text-4xl font-extrabold mb-4">
+            Horoscope Predictions
+          </h1>
+          <p className="text-lg mb-8">
+            Get insights into your daily horoscope and uncover your future.
+          </p>
+          <Link
+            href={`/daily${sign ? `?sign=${sign}` : ""}`}
+            className="bg-white text-blue-500 hover:bg-blue-500 hover:text-white py-2 px-6 rounded-full text-lg font-semibold transition duration-300"
+          >
+            Get Started
+          </Link>
         </div>
-      ) : (
-        <DailyHoroscope />
-      )}
+      </section>
     </>
   );
 }

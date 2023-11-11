@@ -5,19 +5,23 @@ import { StarValueType } from "../interfaces/globalInterfaces";
 
 interface IProps {
   sign: StarValueType | null;
-  setSign: (value: StarValueType) => void;
+  handleChange: (value: StarValueType) => void;
 }
 
-const SignSelect = ({ sign, setSign }: IProps) => {
+const SignSelect = ({ sign, handleChange }: IProps) => {
   return (
     <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
       <Select
         label="Select your sign"
-        defaultSelectedKeys={sign ? [sign] : undefined}
+        selectionMode="single"
+        selectedKeys={sign ? [sign] : []}
       >
         {starSignList.map((sign) => {
           return (
-            <SelectItem key={sign.value} onClick={() => setSign(sign.value)}>
+            <SelectItem
+              key={sign.value}
+              onClick={() => handleChange(sign.value)}
+            >
               {sign.label}
             </SelectItem>
           );
