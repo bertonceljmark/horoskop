@@ -24,7 +24,7 @@ export default function RootLayout({
         <ParticlesBackground />
         <HeaderContainer />
         <Providers>
-          <main className="flex min-h-screen flex-col items-center pt-16 md:p-24 p-3 ">
+          <main className="flex min-h-screen h-fit flex-col items-center pt- md:p-24 p-3 overflow-scroll">
             {children}
           </main>
         </Providers>
