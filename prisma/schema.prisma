@@ -12,6 +12,8 @@ model StarSign {
   signId           String             @id @unique
   title            String
   entries          Prediction[]
+  User             User[]
+  WeeklyPrediction WeeklyPrediction[]
 }
 
 model Prediction {
@@ -31,7 +33,56 @@ model WeeklyPrediction {
   health    Int
   money     Int
   love      Int
+  sign      StarSign @relation(fields: [signId], references: [signId])
   createdAt DateTime @default(now()) @map("created_at")
 
   @@map("WeeklyPredictions")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  signId        String
+  name          String?
+  email         String   @unique
+  password      String
+  emailVerified DateTime?
+  image         String?
+  phone         String?
+  role          String?
+  sign          StarSign? @relation(fields: [signId], references: [signId])
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@id([identifier, token])
 }
