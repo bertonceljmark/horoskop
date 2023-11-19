@@ -16,7 +16,7 @@ const ParticlesBackground = ({ children }: IProps) => {
   }, []);
 
   return (
-    <div className="absolute h-screen w-screen">
+    <div className="absolute h-screen w-screen z-[-9999]">
       <Particles
         id="tsparticles"
         init={particlesInit}

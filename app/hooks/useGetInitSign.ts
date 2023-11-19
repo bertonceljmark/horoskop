@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { getLocalStorageSigns } from "../helpers/horoscopeLocalStorageHelper";
 import { useRouter, useSearchParams } from "next/navigation";
 import { StarValueType } from "../interfaces/globalInterfaces";
+import starSignList from "../utils/starSignHelper";
 
 const useGetInitSign = (): StarValueType | null => {
   const router = useRouter();
@@ -36,7 +37,9 @@ const useGetInitSign = (): StarValueType | null => {
     setMostVisitedSignKey(signKeyWithMostVisits?.key || null);
   });
 
-  return (signFromParams || mostVisitedSignKey) as StarValueType | null;
+  return (signFromParams ||
+    mostVisitedSignKey ||
+    starSignList[0].value) as StarValueType;
 };
 
 export default useGetInitSign;
