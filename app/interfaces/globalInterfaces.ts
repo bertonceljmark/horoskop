@@ -1,3 +1,5 @@
+import { User } from "@prisma/client";
+
 export type StarValueType =
   | "virgo"
   | "libra"
@@ -25,12 +27,31 @@ export const StarValues = Object.freeze({
   GEMINI: "gemini",
   CANCER: "cancer",
   LEO: "leo",
-})
+});
 
 export interface IWeaklyPrediction {
-  signId: string
-  content: string,
-  health: number,
-  money: number,
-  love: number,
+  signId: string;
+  content: string;
+  health: number;
+  money: number;
+  love: number;
+}
+
+export interface IUserCreationParams {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  phone: string;
+}
+
+export interface IError {
+  key: string;
+  value: string;
+}
+export interface IUserCreationResponse {
+  user: User | null;
+  errors: IError[];
+  serverError?: string;
+  success: boolean;
 }

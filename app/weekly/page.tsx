@@ -1,15 +1,15 @@
 "use client";
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from "swiper/react";
 import { useEffect, useState } from "react";
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/effect-cards';
-import { Navigation, Pagination } from 'swiper/modules';
+import "swiper/css";
+import "swiper/css/effect-cards";
+import { Navigation, Pagination } from "swiper/modules";
 
 import WeeklyHoroscopeCard from "../components/WeeklyHoroscopeCard";
 import { IWeaklyPrediction } from "../interfaces/globalInterfaces";
-import { weekliesService } from '../services/weeklies';
+import { weekliesService } from "../services/weeklies";
 
 const sliderBreakpoints = {
   640: {
@@ -24,36 +24,34 @@ const sliderBreakpoints = {
     slidesPerView: 3,
     spaceBetween: 50,
   },
-}
+};
 
 const WeeklyHoroscope = () => {
-  const [weeklies, setWeeklies] = useState<IWeaklyPrediction[]>([])
+  const [weeklies, setWeeklies] = useState<IWeaklyPrediction[]>([]);
 
   const fetchWeeklies = async () => {
-    const weeklies = await weekliesService.getWeeklies()
-    setWeeklies(weeklies)
-  }
+    const weeklies = await weekliesService.getWeeklies();
+    setWeeklies(weeklies);
+  };
 
   useEffect(() => {
-    fetchWeeklies()
-  }, [])
+    fetchWeeklies();
+  }, []);
 
   return (
-    
     <div className="w-full max-w-4xl">
       <div className="my-5 w-full">
-        <h1 className='text-center'>Weekly horoscope</h1>
+        <h1 className="text-center">Weekly horoscope</h1>
         <Swiper
           slidesPerView={1}
           spaceBetween={10}
           navigation={true}
-          pagination={{clickable: true}}
+          pagination={{ clickable: true }}
           breakpoints={sliderBreakpoints}
           modules={[Navigation, Pagination]}
           className="mySwiper"
         >
-          {weeklies.map((weekly,i) => {
-            console.log(weekly);
+          {weeklies.map((weekly, i) => {
             return (
               <SwiperSlide key={`${weekly.signId}-${i}`}>
                 <WeeklyHoroscopeCard
@@ -64,12 +62,12 @@ const WeeklyHoroscope = () => {
                   content={weekly.content}
                 />
               </SwiperSlide>
-            )
+            );
           })}
         </Swiper>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default WeeklyHoroscope;
